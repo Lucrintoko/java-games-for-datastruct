@@ -49,54 +49,94 @@ public class GamePanel extends JFrame implements ActionListener
 
                 //Insantiating each button
                 simonButtons[0] = new SimonButton(this, new Color(150, 0, 0), new Color(255, 0, 0), 0);
+                simonButtons[0].setPreferredSize(new Dimension(200, 200));
+                simonButtons[0].setMinimumSize(new Dimension(200, 200));
+                simonButtons[0].setMaximumSize(new Dimension(200, 200));
+
                 simonButtons[1] = new SimonButton(this, new Color(0, 0, 150), new Color(0, 0, 255), 1);
+                simonButtons[1].setPreferredSize(new Dimension(200, 200));
+                simonButtons[1].setMinimumSize(new Dimension(200, 200));
+                simonButtons[1].setMaximumSize(new Dimension(200, 200));
+
                 simonButtons[2] = new SimonButton(this, new Color(0, 150, 0), new Color(0, 255, 0), 2);
+                simonButtons[2].setPreferredSize(new Dimension(200, 200));
+                simonButtons[2].setMinimumSize(new Dimension(200, 200));
+                simonButtons[2].setMaximumSize(new Dimension(200, 200));
+
                 simonButtons[3] = new SimonButton(this, new Color(150, 150, 0), new Color(255, 255, 0), 3);
+                simonButtons[3].setPreferredSize(new Dimension(200, 200));
+                simonButtons[3].setMinimumSize(new Dimension(200, 200));
+                simonButtons[3].setMaximumSize(new Dimension(200, 200));
 
                 // Organizing buttons in a Grid
-                JPanel gameGrid = new JPanel();
-                gameGrid.setLayout(new GridLayout(2, 2));
+                JPanel mainGameGrid = new JPanel(new GridBagLayout());
+                //Default Configurations of Main Game Grid
+                mainGameGrid.setBackground(Color.BLACK);
+                mainGameGrid.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.GRAY));
+                JPanel gameGrid = new JPanel(new GridLayout(2, 2));
+
+                //Adding to the Grid Layout
                 gameGrid.add(simonButtons[2]); // Green
                 gameGrid.add(simonButtons[0]); // Red
                 gameGrid.add(simonButtons[3]); // Yellow
                 gameGrid.add(simonButtons[1]); // Blue
                 
+                //Adding to Main Game Grid for easier Centering
+                mainGameGrid.add(gameGrid);
+
                 //Adding the Game Grid to actual panel
-                add(gameGrid, BorderLayout.CENTER);
+                add(mainGameGrid, BorderLayout.CENTER);
 
                 //Custom Font (If Failed will utilize Windows Default) [Utilize InputStream so that can still get assets when compiled to .exe]
                 Font customFont;
                 try
                     {
                         InputStream is = getClass().getResourceAsStream("/simonsays/assets/fonts/Montserrat-Bold.ttf");
-                        customFont = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(18f);
+                        customFont = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(24f);
                     }
                 catch (Exception e)
                     {
-                        customFont = new Font("Arial", Font.BOLD, 18);
+                        customFont = new Font("Arial", Font.BOLD, 24);
                     }
 
                 // Control Panel
                 JPanel controlPanel = new JPanel();
+                //Make it so that they get stacked vertically
+                controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+                //Control Panel Default Configurations
+                controlPanel.setBackground(Color.BLACK);
                 btnStart = new JButton("Start Game");
+                btnStart.setPreferredSize(new Dimension(150, 50));
                 btnStart.setFont(customFont);
                 btnStart.setFocusPainted(false);
-                btnStart.setBorderPainted(false);
+                btnStart.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
+                btnStart.setBackground(Color.decode("#06D6A0"));
+                btnStart.setForeground(Color.BLACK);
                 //Add an Action listener to the Button
                 btnStart.addActionListener(this);
                 
                 //Setting text to Status Label
                 statusLabel = new JLabel("Press Start to Play");
                 statusLabel.setFont(customFont);
+                //Make it visible from the Background Color
+                statusLabel.setForeground(Color.WHITE);
                 
-                //Adding Start Button and Status Label inside of Control Panel
-                controlPanel.add(btnStart);
+                //Centering each component
+                btnStart.setAlignmentX(Component.CENTER_ALIGNMENT);
+                statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                statusLabel.setHorizontalAlignment(JLabel.CENTER);
+
+                //Adding Start Button and Status Label inside of Control Panel, Adding Boxes before and after last components to center them
+                controlPanel.add(Box.createRigidArea(new Dimension(0, 10)));
                 controlPanel.add(statusLabel);
+                controlPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+                controlPanel.add(btnStart);
+                controlPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
                 //Adding the Control Panel to the Bottom of the JFrame
                 add(controlPanel, BorderLayout.SOUTH);
 
-                //Initializing a Timer
+                //Initializing a Timer for how long Buttons Flash when game starts
                 flashTimer = new Timer(750, e -> handleFlash());
 
                 //Ensures it will be visible
@@ -134,6 +174,7 @@ public class GamePanel extends JFrame implements ActionListener
                 flashTimer.start();
             }
 
+        //Method to ensure that Flashing stops once the end of the Flash Sequence is reached
         private void handleFlash ()
             {
                 if (flashIndex >= sequence.size())
@@ -147,13 +188,18 @@ public class GamePanel extends JFrame implements ActionListener
                         return;
                     }
 
+                //Take the colorCode (Integer Value of the randomizer)
                 int colorCode = sequence.get(flashIndex);
+                //Create variable btn to check if the btn exists via the Button Code
                 SimonButton btn = getButtonByCode(colorCode);
 
+                //If it exists make it flash for 400ms
                 if (btn != null)
                     {
                         btn.flash();
                     }
+                
+                //Increment to proceed to next random integer
                 flashIndex++;
             }
 
@@ -169,6 +215,7 @@ public class GamePanel extends JFrame implements ActionListener
                 return null;
             }
 
+        //Getter for takingInput
         public boolean isTakingInput() {
             return takingInput;
         }
@@ -201,6 +248,7 @@ public class GamePanel extends JFrame implements ActionListener
                                 nextRoundTimer.start();
                             }
                     }
+                //If the user failed to follow the sequence call Game Over Method
                 else
                     {
                         gameOver();
@@ -211,8 +259,9 @@ public class GamePanel extends JFrame implements ActionListener
         private void gameOver()
             {   
                 takingInput = false;
+                int userScore = sequence.size() - 1;
                 //sequence.size is all of the correct answers of the user and subtracting to 1 to be true to the score due to index of programming
-                statusLabel.setText("<html>Game Over!<br>" + "Score: " + (sequence.size() - 1));
+                statusLabel.setText("<html><center>Game Over!<br>" + "Score: " + userScore + "</center></html>");
                 btnStart.setEnabled(true);
                 flashAll();
             }
@@ -232,6 +281,7 @@ public class GamePanel extends JFrame implements ActionListener
             {
                 if (e.getSource() == btnStart)
                     {
+                        //Start the Game
                         startGame();
                     }
             }
