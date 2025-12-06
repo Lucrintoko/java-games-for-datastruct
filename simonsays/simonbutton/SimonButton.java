@@ -1,11 +1,9 @@
 package simonsays.simonbutton;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import java.util.Random;
 import simonsays.GamePanel;
 
 public class SimonButton extends JPanel implements MouseListener
