@@ -21,7 +21,7 @@ public class GridBlast {
         frame.setVisible(true);
     }
 
-    private static void startGame(JFrame frame) {
+    public static void startGame(JFrame frame) {
 
         frame.getContentPane().removeAll();
 
