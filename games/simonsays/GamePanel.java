@@ -1,5 +1,6 @@
-package simonsays;
+package games.simonsays;
 
+import games.simonsays.simonbutton.SimonButton;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.swing.*;
-import simonsays.simonbutton.SimonButton;
 
 public class GamePanel extends JFrame implements ActionListener
     {
@@ -91,7 +91,7 @@ public class GamePanel extends JFrame implements ActionListener
                 Font customFont;
                 try
                     {
-                        InputStream is = getClass().getResourceAsStream("/simonsays/assets/fonts/Montserrat-Bold.ttf");
+                        InputStream is = getClass().getResourceAsStream("/games/simonsays/assets/fonts/Montserrat-Bold.ttf");
                         customFont = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(24f);
                     }
                 catch (Exception e)

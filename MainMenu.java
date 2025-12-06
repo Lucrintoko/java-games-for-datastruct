@@ -1,5 +1,5 @@
+import games.simonsays.GamePanel;
 import javax.swing.SwingUtilities;
-import simonsays.GamePanel;
 
 public class MainMenu
     {
