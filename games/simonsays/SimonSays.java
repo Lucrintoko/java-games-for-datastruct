@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Random;
 import javax.swing.*;
 
-public class GamePanel extends JFrame implements ActionListener
+public class SimonSays extends JFrame implements ActionListener
     {
         //Initializing attributes and variables for manipulation
         SimonButton[] simonButtons;
@@ -30,7 +30,7 @@ public class GamePanel extends JFrame implements ActionListener
 
         private final Random random = new Random();
         
-        public GamePanel ()
+        public SimonSays ()
             {
                 //Default JFrame Configurations
                 this.setTitle("Simon Says");
