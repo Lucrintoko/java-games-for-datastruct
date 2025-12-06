@@ -76,7 +76,7 @@ public class GridBlast {
 
         restartItem.addActionListener(e -> startGame(frame));
 
-        exitItem.addActionListener(e -> System.exit(0));
+        exitItem.addActionListener(e -> frame.dispose());
 
         frame.revalidate();
         frame.repaint();
