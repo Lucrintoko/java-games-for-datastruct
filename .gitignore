@@ -25,3 +25,4 @@ target/
 build/
 cmake-build-*/
 out/
+staging/
