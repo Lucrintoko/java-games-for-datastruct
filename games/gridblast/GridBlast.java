@@ -11,7 +11,7 @@ public class GridBlast {
     public static void main(String[] args) {
 
         JFrame frame = new JFrame("Grid Blast");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.setSize(900, 700);
         frame.setLocationRelativeTo(null);
