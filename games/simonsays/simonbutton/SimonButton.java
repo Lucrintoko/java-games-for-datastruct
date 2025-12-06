@@ -1,6 +1,6 @@
 package games.simonsays.simonbutton;
 
-import games.simonsays.GamePanel;
+import games.simonsays.SimonSays;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -13,9 +13,9 @@ public class SimonButton extends JPanel implements MouseListener
         private Color flashColor;
         private int code;
         private boolean isLit;
-        private GamePanel gamePanel;
+        private SimonSays gamePanel;
 
-        public SimonButton (GamePanel gamePanel, Color base, Color flash, int code)
+        public SimonButton (SimonSays gamePanel, Color base, Color flash, int code)
             {
                 this.gamePanel = gamePanel;
                 //Setting fields
